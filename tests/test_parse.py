@@ -220,6 +220,11 @@ class TestParse(TestCase):
         self.assertEqual('CHECKING', ofx.accounts[0].account_type)
         self.assertEqual('SAVINGS', ofx.accounts[1].account_type)
 
+    def test_file_linebreak_before_headers_with_non_ascii_content(self):
+        with open_file('linebreak-before-headers-with-non-ascii-content.ofx') as ofx_file:
+            ofx = OfxParser.parse(ofx_file)
+        self.assertEqual(len(ofx.account.statement.transactions), 1)
+
 
 class TestStringToDate(TestCase):
     ''' Test the string to date parser '''
